@@ -26,13 +26,90 @@ em { font-weight:500; }
 .photo span { padding:1rem; font-size:9px; letter-spacing:.12em; text-align:center; }
 .photo-large { aspect-ratio:9 / 14; max-width:450px; margin:3.5rem auto 0; border-radius:48% 52% 8% 9% / 18% 19% 5% 6%; box-shadow:12px 14px 0 rgba(189,130,117,.24); }
 .collage-section { background:#eee0d8; }
-.photo-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:10px; max-width:720px; }
-.photo-one { grid-row:span 2; min-height:320px; }.photo-two { min-height:155px; background:#d1a195; }.photo-three { min-height:155px; background:#e6c9b9; }
+.photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 720px;
+}
+
+/* Each tile arches on the two corners facing the outside of the grid, so the
+   four together read as one soft shape instead of four separate rounded boxes. */
+.photo-grid .photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+.photo-one { border-top-left-radius: 42% 26%; }
+.photo-two { border-top-right-radius: 42% 26%; }
+.photo-three { border-bottom-left-radius: 42% 26%; }
+.photo-four { border-bottom-right-radius: 42% 26%; }
+
+/* A tile holding a real photo lets the image fill it edge to edge;
+   the centering used for placeholder labels would shrink-wrap it instead. */
+.photo.has-photo { display: block; }
+
+.photo-grid .photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.photo-grid .photo:hover img {
+  transform: scale(1.025);
+}
 .caption { max-width:390px; margin:1.3rem 0 0 auto; font-size:12px; }
+.year-section { background:#f6ebe3; }
+
+/* Six-column track so five photos divide evenly: a top row of two (3 + 3)
+   above a bottom row of three (2 + 2 + 2). Every tile shares one aspect
+   ratio, so both rows line up on a single baseline. */
+.year-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  max-width: 720px;
+  margin-top: 3rem;
+}
+
+.year-photo-grid .photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+.year-photo-one,
+.year-photo-two { grid-column: span 3; }
+
+.year-photo-three,
+.year-photo-four,
+.year-photo-five { grid-column: span 2; }
+
+/* Arch the corners on the outer edge of the block, matching section 02. */
+.year-photo-one { border-top-left-radius: 38% 24%; }
+.year-photo-two { border-top-right-radius: 38% 24%; }
+.year-photo-three { border-bottom-left-radius: 38% 30%; }
+.year-photo-five { border-bottom-right-radius: 38% 30%; }
+
+.year-photo-grid .photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.year-photo-grid .photo:hover img { transform: scale(1.025); }
 .things-section { background:var(--ink); color:#f9f2ec; }.things-section .eyebrow,.things-section .things-list p { color:#d7c7c1; }
 .things-list { margin:3rem 0 0; padding:0; list-style:none; border-top:1px solid rgba(249,242,236,.25); }.things-list li { display:grid; grid-template-columns:3rem 1fr; gap:1rem; padding:1.2rem 0; border-bottom:1px solid rgba(249,242,236,.25); }.things-list span { font-size:10px; color:var(--rose); }.things-list p { margin:0; font-family:var(--display); font-size:1.25rem; line-height:1.35; }
-.now-layout { display:grid; gap:3rem; }.photo-portrait { aspect-ratio:3 / 4; max-width:390px; background:#c59a8e; }
 .letter-section { background:#f3e8df; }.letter { max-width:600px; padding:clamp(2rem,8vw,4.5rem); background:#fffaf6; box-shadow:0 10px 35px rgba(68,42,34,.08); }.letter p { font-family:var(--display); font-size:clamp(1.2rem,4vw,1.55rem); line-height:1.55; }.letter-opening { margin-top:0; }.signoff { margin:2.5rem 0 0; }.signoff span { font-style:italic; }
 footer { padding:2rem max(1.5rem,7vw); text-align:left; background:var(--ink); color:#f9f2ec; font-size:11px; letter-spacing:.1em; text-transform:uppercase; }
-@media (min-width:720px) { .section { padding-left:max(10vw,4rem); padding-right:max(10vw,4rem); }.now-layout { grid-template-columns:1fr .75fr; align-items:end; }.photo-portrait { justify-self:end; width:100%; } }
+@media (min-width:720px) { .section { padding-left:max(10vw,4rem); padding-right:max(10vw,4rem); } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; }.js .hero > *, .js .section:not(.hero) > * { opacity:1; transform:none; transition:none; }.opening-note strong { animation:none; transform:rotate(-3deg); } }
